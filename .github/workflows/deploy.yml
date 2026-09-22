@@ -1,4 +1,5 @@
-# main 브랜치에 올리면 GitHub Pages 로 자동 배포됩니다.
+# main 브랜치에 올리면 홈페이지가 자동으로 다시 배포됩니다.
+# 빌드 결과물(dist)을 gh-pages 브랜치로 올리는 방식입니다.
 name: Deploy to GitHub Pages
 
 on:
@@ -7,31 +8,35 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # 저장소에 Pages 가 꺼져 있으면 자동으로 켜 줍니다.
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - uses: withastro/action@v4
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+      - run: touch dist/.nojekyll
+
+      - name: gh-pages 브랜치로 배포
+        run: |
+          cd dist
+          git init -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
