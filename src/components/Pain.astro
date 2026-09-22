@@ -8,22 +8,22 @@ const worries = [
 ];
 ---
 
-<section id="problem" class="border-b border-slate-200 bg-white">
+<section id="problem" class="bg-gradient-to-b from-cream-200 via-cream-100 to-cream-50">
 	<div class="mx-auto max-w-4xl px-5 py-20 md:py-24">
-		<h2 class="text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+		<h2 class="reveal text-center text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
 			혹시 이런 고민을 하고 계신가요?
 		</h2>
 
 		<ul class="mt-12 space-y-3">
 			{worries.map((worry) => (
-				<li class="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 px-5 py-4">
-					<span class="mt-0.5 text-lg text-indigo-600" aria-hidden="true">✓</span>
-					<span class="text-base text-slate-700">{worry}</span>
+				<li class="reveal flex items-start gap-4 rounded-2xl border border-cream-300/70 bg-gradient-to-r from-white to-cream-50 px-6 py-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-md">
+					<span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-leaf-500 to-leaf-500/80 text-xs font-bold text-white" aria-hidden="true">✓</span>
+					<span class="text-[17px] leading-relaxed text-ink-700">{worry}</span>
 				</li>
 			))}
 		</ul>
 
-		<p class="mt-12 rounded-2xl bg-indigo-600 px-8 py-8 text-center text-lg font-semibold text-white sm:text-xl">
+		<p class="reveal mt-12 rounded-3xl bg-gradient-to-r from-brand-600 via-brand-500 to-amber-500 px-8 py-9 text-center font-display text-xl font-bold text-white shadow-xl shadow-brand-500/20 sm:text-2xl">
 			이건 사장님의 잘못이 아닙니다.<br class="sm:hidden" />
 			알려 주는 사람이 없었을 뿐입니다.
 		</p>

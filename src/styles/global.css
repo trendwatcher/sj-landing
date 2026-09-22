@@ -1,9 +1,163 @@
 @import "tailwindcss";
 
 @theme {
-	--font-sans: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+	/* 본문은 프리텐다드(가독성), 제목은 고운바탕(디자인 서체) */
+	--font-sans: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+	--font-display: "Gowun Batang", "Nanum Myeongjo", serif;
+
+	/* 베이지 계열 배경 */
+	--color-cream-50: #fdfaf4;
+	--color-cream-100: #faf4e9;
+	--color-cream-200: #f4ebda;
+	--color-cream-300: #e9dcc4;
+
+	/* 글자색 (따뜻한 먹색) */
+	--color-ink-900: #2f2922;
+	--color-ink-700: #4a4238;
+	--color-ink-500: #6e6357;
+
+	/* 강조색 (밝은 테라코타) */
+	--color-brand-50: #fdf2e7;
+	--color-brand-100: #f9dfc9;
+	--color-brand-200: #f2c49c;
+	--color-brand-500: #c2611f;
+	--color-brand-600: #a94f14;
+	--color-brand-700: #8c4210;
+
+	/* 보조 강조색 (차분한 초록) */
+	--color-leaf-500: #2f7d63;
+	--color-leaf-50: #e7f3ee;
 }
 
-html {
-	word-break: keep-all;
+@layer base {
+	html {
+		word-break: keep-all;
+		scroll-behavior: smooth;
+		scroll-padding-top: 5rem;
+	}
+
+	body {
+		background-color: var(--color-cream-100);
+		color: var(--color-ink-900);
+		font-size: 1.0625rem;
+		line-height: 1.75;
+	}
+
+	h1, h2, h3 {
+		font-family: var(--font-display);
+		letter-spacing: -0.01em;
+	}
+}
+
+/* ── 메뉴 밑줄 애니메이션 ───────────────────────────── */
+.nav-link {
+	position: relative;
+	padding-bottom: 2px;
+}
+
+.nav-link::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 2px;
+	width: 100%;
+	background-color: var(--color-brand-500);
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link[data-active="true"]::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+
+/* ── 햄버거 버튼 → X 모양 변형 ──────────────────────── */
+.burger-line {
+	transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+[aria-expanded="true"] .burger-top {
+	transform: translateY(6px) rotate(45deg);
+}
+
+[aria-expanded="true"] .burger-mid {
+	opacity: 0;
+}
+
+[aria-expanded="true"] .burger-bottom {
+	transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ── 모바일 메뉴 펼침 ──────────────────────────────── */
+#mobile-menu {
+	overflow: hidden;
+	max-height: 0;
+	opacity: 0;
+	transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+#mobile-menu.open {
+	max-height: 22rem;
+	opacity: 1;
+}
+
+#mobile-menu a {
+	transform: translateY(-6px);
+	opacity: 0;
+	transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+#mobile-menu.open a {
+	transform: none;
+	opacity: 1;
+}
+
+#mobile-menu.open a:nth-child(1) { transition-delay: 0.05s; }
+#mobile-menu.open a:nth-child(2) { transition-delay: 0.1s; }
+#mobile-menu.open a:nth-child(3) { transition-delay: 0.15s; }
+#mobile-menu.open a:nth-child(4) { transition-delay: 0.2s; }
+
+/* ── 스크롤 시 등장 ────────────────────────────────── */
+.reveal {
+	opacity: 0;
+	transform: translateY(18px);
+	transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.in-view {
+	opacity: 1;
+	transform: none;
+}
+
+/* ── 첫 화면 진입 애니메이션 ───────────────────────── */
+@keyframes rise {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: none; }
+}
+
+.rise {
+	animation: rise 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.rise-1 { animation-delay: 0.05s; }
+.rise-2 { animation-delay: 0.18s; }
+.rise-3 { animation-delay: 0.31s; }
+.rise-4 { animation-delay: 0.44s; }
+
+/* 움직임을 줄이는 설정을 켠 분에게는 애니메이션을 끕니다 */
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+
+	.reveal,
+	.rise,
+	#mobile-menu a {
+		opacity: 1 !important;
+		transform: none !important;
+		animation: none !important;
+		transition: none !important;
+	}
 }

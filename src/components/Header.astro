@@ -1,25 +1,133 @@
 ---
 import { CONTACT, SITE } from '../consts';
+
+const menu = [
+	{ href: '#problem', label: '이런 고민' },
+	{ href: '#solution', label: '컨설팅' },
+	{ href: '#courses', label: 'VOD 과정' },
+	{ href: '#faq', label: '자주 묻는 질문' },
+];
 ---
 
-<header class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur">
-	<div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-		<a href="#top" class="text-base font-bold tracking-tight text-slate-900">
+<header
+	id="site-header"
+	class="sticky top-0 z-40 border-b border-cream-300/70 bg-cream-50/80 backdrop-blur-md transition-all duration-300"
+>
+	<div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 transition-all duration-300">
+		<a href="#top" class="font-display text-base font-bold tracking-tight text-ink-900 sm:text-lg">
 			{SITE.name}
 		</a>
 
-		<nav class="hidden items-center gap-7 text-sm font-medium text-slate-600 md:flex">
-			<a href="#problem" class="hover:text-indigo-600">이런 고민</a>
-			<a href="#solution" class="hover:text-indigo-600">컨설팅</a>
-			<a href="#courses" class="hover:text-indigo-600">VOD 과정</a>
-			<a href="#faq" class="hover:text-indigo-600">자주 묻는 질문</a>
+		<nav class="hidden items-center gap-8 text-[15px] font-medium text-ink-700 md:flex">
+			{menu.map((item) => (
+				<a href={item.href} class="nav-link transition-colors duration-200 hover:text-brand-600">
+					{item.label}
+				</a>
+			))}
 		</nav>
 
-		<a
-			href={CONTACT.phoneHref}
-			class="rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
-		>
-			<span class="hidden sm:inline">무료 상담 </span>{CONTACT.phone}
-		</a>
+		<div class="flex items-center gap-2">
+			<a
+				href={CONTACT.phoneHref}
+				class="hidden rounded-full bg-gradient-to-r from-brand-500 to-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-500/35 sm:inline-block"
+			>
+				무료 상담 {CONTACT.phone}
+			</a>
+
+			<button
+				id="menu-toggle"
+				type="button"
+				aria-expanded="false"
+				aria-controls="mobile-menu"
+				aria-label="메뉴 열기"
+				class="flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-xl border border-cream-300 bg-cream-50 transition-colors duration-200 hover:bg-cream-200 md:hidden"
+			>
+				<span class="burger-line burger-top block h-0.5 w-5 rounded-full bg-ink-900"></span>
+				<span class="burger-line burger-mid block h-0.5 w-5 rounded-full bg-ink-900"></span>
+				<span class="burger-line burger-bottom block h-0.5 w-5 rounded-full bg-ink-900"></span>
+			</button>
+		</div>
 	</div>
+
+	<nav id="mobile-menu" class="border-t border-cream-300/70 bg-cream-50 md:hidden">
+		<div class="flex flex-col px-5 py-2">
+			{menu.map((item) => (
+				<a
+					href={item.href}
+					class="border-b border-cream-200 py-3.5 text-[15px] font-medium text-ink-700 last:border-0"
+				>
+					{item.label}
+				</a>
+			))}
+		</div>
+	</nav>
 </header>
+
+<script>
+	const setupHeader = () => {
+		const toggle = document.getElementById('menu-toggle');
+		const menu = document.getElementById('mobile-menu');
+		const header = document.getElementById('site-header');
+
+		// 햄버거 버튼 → 메뉴 펼치기/접기
+		if (toggle && menu) {
+			const setOpen = (open: boolean) => {
+				toggle.setAttribute('aria-expanded', String(open));
+				toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+				menu.classList.toggle('open', open);
+			};
+
+			toggle.addEventListener('click', () => {
+				setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+			});
+
+			// 메뉴를 고르면 저절로 접힙니다.
+			menu.querySelectorAll('a').forEach((link) => {
+				link.addEventListener('click', () => setOpen(false));
+			});
+
+			document.addEventListener('keydown', (event) => {
+				if (event.key === 'Escape') setOpen(false);
+			});
+		}
+
+		// 스크롤하면 머리말에 그림자가 생깁니다.
+		if (header) {
+			const onScroll = () => {
+				header.classList.toggle('shadow-lg', window.scrollY > 12);
+				header.classList.toggle('shadow-brand-900/5', window.scrollY > 12);
+			};
+			onScroll();
+			window.addEventListener('scroll', onScroll, { passive: true });
+		}
+
+		// 지금 보고 있는 섹션의 메뉴에 밑줄이 켜집니다.
+		const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('nav .nav-link'));
+		const sections = links
+			.map((link) => document.querySelector(link.getAttribute('href') ?? ''))
+			.filter((section): section is Element => section !== null);
+
+		if ('IntersectionObserver' in window && sections.length > 0) {
+			const spy = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (!entry.isIntersecting) continue;
+						links.forEach((link) => {
+							const active = link.getAttribute('href') === `#${entry.target.id}`;
+							link.dataset.active = String(active);
+						});
+					}
+				},
+				{ rootMargin: '-45% 0px -50% 0px' },
+			);
+			sections.forEach((section) => spy.observe(section));
+		}
+	};
+
+	// 본문이 모두 그려진 뒤에 시작합니다.
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupHeader);
+	} else {
+		setupHeader();
+	}
+</script>

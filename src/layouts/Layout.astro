@@ -31,17 +31,66 @@ const jsonLd = {
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content={description} />
+		<meta name="theme-color" content="#faf4e9" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="ko_KR" />
 		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
 		<link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
+
+		<!-- 본문 글꼴: 프리텐다드 -->
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+		/>
+		<!-- 제목 글꼴: 고운바탕 -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
 	</head>
-	<body class="scroll-smooth bg-white text-slate-900 antialiased">
+	<body class="bg-cream-100 text-ink-900 antialiased">
 		<slot />
+
+		<script>
+			const revealOnScroll = () => {
+				const items = document.querySelectorAll('.reveal');
+				const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+				if (!motionOk || !('IntersectionObserver' in window)) {
+					items.forEach((item) => item.classList.add('in-view'));
+					return;
+				}
+
+				const observer = new IntersectionObserver(
+					(entries) => {
+						for (const entry of entries) {
+							// 화면에 들어왔거나, 빠른 스크롤로 이미 지나친 경우 모두 보이게 합니다.
+							if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+								entry.target.classList.add('in-view');
+								observer.unobserve(entry.target);
+							}
+						}
+					},
+					{ rootMargin: '0px 0px -12% 0px', threshold: 0.1 },
+				);
+
+				items.forEach((item) => observer.observe(item));
+			};
+
+			// 본문이 모두 그려진 뒤에 시작합니다.
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', revealOnScroll);
+			} else {
+				revealOnScroll();
+			}
+		</script>
 	</body>
 </html>
