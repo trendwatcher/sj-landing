@@ -1,0 +1,71 @@
+---
+import { CONTACT } from '../consts';
+---
+
+<section id="top" class="relative overflow-hidden border-b border-slate-200 bg-slate-50">
+	<div class="pointer-events-none absolute -top-32 -right-24 h-96 w-96 rounded-full bg-indigo-200/40 blur-3xl"></div>
+
+	<div class="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 md:grid-cols-2 md:py-28">
+		<div>
+			<p class="mb-4 inline-flex items-center rounded-full border border-indigo-200 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-indigo-700">
+				소상공인 전문 컨설팅 · 온라인 VOD 과정
+			</p>
+
+			<h1 class="text-4xl leading-tight font-bold tracking-tight text-slate-900 sm:text-5xl">
+				열심히 하는데 매출이 그대로라면,<br />
+				<span class="text-indigo-600">방법을 바꿀 차례입니다.</span>
+			</h1>
+
+			<p class="mt-6 text-lg leading-relaxed text-slate-600">
+				소상공인 컨설턴트 {CONTACT.name}이 매장 현장 진단부터 온라인 홍보, 정부지원사업 준비까지
+				1:1로 함께합니다. 배운 내용은 VOD 과정으로 언제든 다시 확인할 수 있습니다.
+			</p>
+
+			<div class="mt-9 flex flex-col gap-3 sm:flex-row">
+				<a
+					href={CONTACT.phoneHref}
+					class="rounded-xl bg-indigo-600 px-7 py-4 text-center text-base font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700"
+				>
+					무료 상담 신청하기
+				</a>
+				<a
+					href="#courses"
+					class="rounded-xl border border-slate-300 bg-white px-7 py-4 text-center text-base font-semibold text-slate-700 transition hover:border-slate-400"
+				>
+					VOD 과정 둘러보기
+				</a>
+			</div>
+
+			<p class="mt-4 text-sm text-slate-500">
+				상담 전화 {CONTACT.phone} · 첫 상담은 비용이 들지 않습니다.
+			</p>
+		</div>
+
+		<div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5">
+			<p class="text-sm font-semibold text-slate-500">이렇게 도와드립니다</p>
+			<ul class="mt-6 space-y-5">
+				<li class="flex gap-4">
+					<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-sm font-bold text-indigo-600">1</span>
+					<div>
+						<p class="font-semibold text-slate-900">현장 진단</p>
+						<p class="mt-1 text-sm text-slate-600">매장·상권·고객 흐름을 직접 보고 문제를 찾습니다.</p>
+					</div>
+				</li>
+				<li class="flex gap-4">
+					<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-sm font-bold text-indigo-600">2</span>
+					<div>
+						<p class="font-semibold text-slate-900">실행 계획</p>
+						<p class="mt-1 text-sm text-slate-600">오늘 바로 할 수 있는 순서로 정리해 드립니다.</p>
+					</div>
+				</li>
+				<li class="flex gap-4">
+					<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-sm font-bold text-indigo-600">3</span>
+					<div>
+						<p class="font-semibold text-slate-900">반복 학습</p>
+						<p class="mt-1 text-sm text-slate-600">VOD 과정으로 필요할 때마다 다시 봅니다.</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>

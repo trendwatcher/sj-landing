@@ -1,0 +1,36 @@
+---
+/**
+ * 실제 후기만 넣습니다. 비어 있으면 이 섹션 자체가 보이지 않습니다.
+ * 받은 후기를 아래 형식으로 추가하세요.
+ *
+ *   { name: '○○식당 김○○ 사장님', body: '실제로 받은 후기 내용', result: '재방문 손님이 늘었습니다' },
+ */
+const reviews: { name: string; body: string; result?: string }[] = [];
+---
+
+{reviews.length > 0 && (
+	<section class="border-b border-slate-200 bg-white">
+		<div class="mx-auto max-w-6xl px-5 py-20 md:py-24">
+			<div class="mx-auto max-w-2xl text-center">
+				<p class="text-sm font-semibold tracking-widest text-indigo-600">REVIEW</p>
+				<h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+					먼저 시작한 사장님들의 이야기
+				</h2>
+			</div>
+
+			<div class="mt-14 grid gap-6 md:grid-cols-3">
+				{reviews.map((review) => (
+					<figure class="flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-50 p-7">
+						<blockquote class="grow leading-relaxed text-slate-700">“{review.body}”</blockquote>
+						{review.result && (
+							<p class="mt-4 text-sm font-semibold text-indigo-600">{review.result}</p>
+						)}
+						<figcaption class="mt-5 border-t border-slate-200 pt-4 text-sm font-medium text-slate-500">
+							{review.name}
+						</figcaption>
+					</figure>
+				))}
+			</div>
+		</div>
+	</section>
+)}

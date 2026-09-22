@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Pain from '../components/Pain.astro';
+import Solution from '../components/Solution.astro';
+import Benefits from '../components/Benefits.astro';
+import Courses from '../components/Courses.astro';
+import Proof from '../components/Proof.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Footer from '../components/Footer.astro';
+import StickyCta from '../components/StickyCta.astro';
+import { SITE } from '../consts';
+---
+
+<Layout title={SITE.title} description={SITE.description}>
+	<Header />
+	<main class="pb-20 md:pb-0">
+		<Hero />
+		<Pain />
+		<Solution />
+		<Benefits />
+		<Courses />
+		<Proof />
+		<Faq />
+		<FinalCta />
+	</main>
+	<Footer />
+	<StickyCta />
+</Layout>

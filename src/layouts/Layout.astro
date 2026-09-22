@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import { CONTACT, SITE } from '../consts';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title = SITE.title, description = SITE.description } = Astro.props;
+
+/** 검색엔진이 읽는 사업자 정보 (구조화 데이터) */
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ProfessionalService',
+	name: SITE.name,
+	description: SITE.description,
+	telephone: CONTACT.phone,
+	email: CONTACT.email,
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: CONTACT.address,
+		addressCountry: 'KR',
+	},
+};
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="ko_KR" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+		<link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+	</head>
+	<body class="scroll-smooth bg-white text-slate-900 antialiased">
+		<slot />
+	</body>
+</html>

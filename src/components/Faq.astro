@@ -1,0 +1,50 @@
+---
+import { CONTACT } from '../consts';
+
+const faqs = [
+	{
+		q: '상담 비용이 얼마인가요?',
+		a: '첫 상담은 비용이 들지 않습니다. 이야기를 들어 보고 필요한 경우에만 이후 일정과 비용을 안내해 드립니다.',
+	},
+	{
+		q: '어느 지역까지 방문하시나요?',
+		a: '하남·서울·경기 지역은 방문 상담이 가능합니다. 거리가 먼 경우에는 전화와 온라인 화상으로 진행합니다.',
+	},
+	{
+		q: '온라인을 전혀 모르는데 따라갈 수 있을까요?',
+		a: '대부분 그 상태에서 시작하십니다. 휴대폰으로 할 수 있는 것부터 하나씩 알려 드리고, 같은 내용을 VOD 과정으로 다시 볼 수 있습니다.',
+	},
+	{
+		q: 'VOD 과정은 어떻게 듣나요?',
+		a: 'LMS 사이트에서 수강 신청하면 바로 들을 수 있습니다. 수강 기간 동안 반복해서 볼 수 있어 필요할 때마다 다시 확인하시면 됩니다.',
+	},
+	{
+		q: '얼마나 걸리나요?',
+		a: '가게 상황에 따라 다릅니다. 급한 것부터 잡으면 보통 첫 한 달 안에 변화를 확인하실 수 있습니다.',
+	},
+];
+---
+
+<section id="faq" class="border-b border-slate-200 bg-slate-50">
+	<div class="mx-auto max-w-3xl px-5 py-20 md:py-24">
+		<h2 class="text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+			자주 묻는 질문
+		</h2>
+
+		<div class="mt-12 space-y-3">
+			{faqs.map((faq) => (
+				<details class="group rounded-xl border border-slate-200 bg-white px-6 py-5 open:shadow-sm">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+						<span>{faq.q}</span>
+						<span class="text-xl text-indigo-600 transition group-open:rotate-45" aria-hidden="true">+</span>
+					</summary>
+					<p class="mt-4 leading-relaxed text-slate-600">{faq.a}</p>
+				</details>
+			))}
+		</div>
+
+		<p class="mt-10 text-center text-slate-600">
+			더 궁금한 점은 <a href={CONTACT.phoneHref} class="font-semibold text-indigo-600 underline underline-offset-4">{CONTACT.phone}</a> 으로 편하게 전화 주세요.
+		</p>
+	</div>
+</section>

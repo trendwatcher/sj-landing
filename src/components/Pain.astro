@@ -1,0 +1,31 @@
+---
+const worries = [
+	'홍보를 해야 한다는 건 아는데, 무엇부터 해야 할지 모르겠다.',
+	'블로그·인스타그램을 시작했지만 손님으로 이어지지 않는다.',
+	'광고비만 계속 나가고 남는 게 없다.',
+	'정부지원사업이 있다는데 서류가 어려워 포기했다.',
+	'물어볼 사람이 없어 혼자 결정하고 혼자 후회한다.',
+];
+---
+
+<section id="problem" class="border-b border-slate-200 bg-white">
+	<div class="mx-auto max-w-4xl px-5 py-20 md:py-24">
+		<h2 class="text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+			혹시 이런 고민을 하고 계신가요?
+		</h2>
+
+		<ul class="mt-12 space-y-3">
+			{worries.map((worry) => (
+				<li class="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 px-5 py-4">
+					<span class="mt-0.5 text-lg text-indigo-600" aria-hidden="true">✓</span>
+					<span class="text-base text-slate-700">{worry}</span>
+				</li>
+			))}
+		</ul>
+
+		<p class="mt-12 rounded-2xl bg-indigo-600 px-8 py-8 text-center text-lg font-semibold text-white sm:text-xl">
+			이건 사장님의 잘못이 아닙니다.<br class="sm:hidden" />
+			알려 주는 사람이 없었을 뿐입니다.
+		</p>
+	</div>
+</section>

@@ -1,0 +1,29 @@
+---
+import { CONTACT } from '../consts';
+---
+
+<section id="contact" class="bg-indigo-600">
+	<div class="mx-auto max-w-3xl px-5 py-20 text-center md:py-24">
+		<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+			더 미루지 마시고, 오늘 한 번 이야기해 보세요.
+		</h2>
+		<p class="mt-5 text-lg text-indigo-100">
+			전화 한 통이면 됩니다. 지금 가게 상황을 듣고, 무엇부터 하면 좋을지 알려 드리겠습니다.
+		</p>
+
+		<div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+			<a
+				href={CONTACT.phoneHref}
+				class="rounded-xl bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition hover:bg-indigo-50"
+			>
+				📞 {CONTACT.phone}
+			</a>
+			<a
+				href={CONTACT.emailHref}
+				class="rounded-xl border border-indigo-300 px-8 py-4 text-base font-semibold text-white transition hover:bg-indigo-500"
+			>
+				✉️ 이메일로 문의하기
+			</a>
+		</div>
+	</div>
+</section>

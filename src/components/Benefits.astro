@@ -1,0 +1,32 @@
+---
+const rows = [
+	{ before: '무엇부터 할지 몰라 미뤄 둔다', after: '이번 주에 할 일이 정해져 있다' },
+	{ before: '광고비를 쓰지만 효과를 모른다', after: '어디서 손님이 오는지 숫자로 본다' },
+	{ before: 'SNS 계정만 만들어 두고 방치한다', after: '정해진 요일에 꾸준히 올린다' },
+	{ before: '지원사업은 어려워서 포기한다', after: '준비 서류와 일정을 미리 챙긴다' },
+];
+---
+
+<section class="border-b border-slate-200 bg-white">
+	<div class="mx-auto max-w-5xl px-5 py-20 md:py-24">
+		<div class="mx-auto max-w-2xl text-center">
+			<p class="text-sm font-semibold tracking-widest text-indigo-600">BEFORE &amp; AFTER</p>
+			<h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+				무엇이 달라지나요?
+			</h2>
+		</div>
+
+		<div class="mt-12 overflow-hidden rounded-2xl border border-slate-200">
+			<div class="grid grid-cols-2 bg-slate-100 text-sm font-semibold text-slate-600">
+				<div class="px-5 py-4">지금</div>
+				<div class="bg-indigo-600 px-5 py-4 text-white">컨설팅 이후</div>
+			</div>
+			{rows.map((row) => (
+				<div class="grid grid-cols-2 border-t border-slate-200 text-sm sm:text-base">
+					<div class="px-5 py-5 text-slate-500">{row.before}</div>
+					<div class="bg-indigo-50/60 px-5 py-5 font-medium text-slate-900">{row.after}</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
