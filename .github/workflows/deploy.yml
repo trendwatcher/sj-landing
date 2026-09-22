@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # 저장소에 Pages 가 꺼져 있으면 자동으로 켜 줍니다.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: withastro/action@v4
 
   deploy:
